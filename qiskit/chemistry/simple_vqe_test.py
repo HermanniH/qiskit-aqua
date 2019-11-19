@@ -47,14 +47,14 @@ for r in rs:
     qmolecule = driver.run()
 
     core = Hamiltonian(transformation=TransformationType.FULL,
-                            qubit_mapping=QubitMappingType.JORDAN_WIGNER, # JORDAN
-                            two_qubit_reduction=False,
+                            qubit_mapping=QubitMappingType.PARITY, # JORDAN
+                            two_qubit_reduction=True,
                             freeze_core=True,
                             orbital_reduction=[])
     qubit_op, _ = core.run(qmolecule)
 
     # find the symmetries of the Hamiltonian
-    # z2_symmetries = Z2Symmetries.find_Z2_symmetries(qubit_op)
+    #z2_symmetries = Z2Symmetries.find_Z2_symmetries(qubit_op)
     # tapered_ops = z2_symmetries.taper(qubit_op)
     # smallest_idx = 0  # Prior knowledge of which tapered_op has ground state
     # # or you can find the operator that has the ground state by diagonalising each operator
@@ -72,8 +72,7 @@ for r in rs:
     # # the tapered Hamiltonian operator
     # the_tapered_op = tapered_ops[smallest_idx]
 
-    the_tapered_op=qubit_op
-
+    the_tapered_op= qubit_op
     # optimizers
     # optimizer = SLSQP(maxiter=1000)
     optimizer = L_BFGS_B(maxiter=1000)
@@ -117,7 +116,8 @@ for r in rs:
     algo = VQE(the_tapered_op, var_form, optimizer)
 
     # Choose the backend (use Aer instead of BasicAer)
-    backend = Aer.get_backend('statevector_simulator')
+    #backend = Aer.get_backend('statevector_simulator')
+    backend = Aer.get_backend('qasm_simulator')
     quantum_instance = QuantumInstance(backend=backend)
 
     # run the algorithm
