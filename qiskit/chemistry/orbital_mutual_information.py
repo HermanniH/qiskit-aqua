@@ -1114,7 +1114,7 @@ def plot_orb_entropy(list_orb_entr):
 # print(mut_info)
 
 # Working Test code
-
+#
 # RMD = RDMFermionicOperator(number_modes=4, operator_mode='matrix', var_form=var_form,
 #                            map_type='jordan_wigner', parameters=parameters, quantum_instance=quantum_instance)
 # mut_info_matrix = RMD.mutual_information_matrix(num_orbitals=4, parameters=parameters)
